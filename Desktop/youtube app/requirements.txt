@@ -1,0 +1,29 @@
+# Django & REST Framework
+Django==5.0.3
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+django-allauth==0.61.0
+
+# Database
+psycopg2-binary==2.9.9
+dj-database-url==2.1.0
+
+# Task Queue
+celery==5.3.6
+redis==5.0.1
+
+# ML/NLP
+transformers==4.38.2
+textblob==0.17.1
+
+# API
+google-api-python-client==2.118.0
+python-dotenv==1.0.1
+
+# Testing
+pytest==8.0.2
+pytest-django==4.8.0
+
+# Development
+black==24.2.0
+flake8==7.0.0 
