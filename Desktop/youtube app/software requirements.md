@@ -7,7 +7,7 @@
   - **Frontend:** React-based interactive dashboard (with optional Django templates fallback).  
   - **Backend:** Django + Django REST Framework (DRF) for API and business logic.  
   - **Worker Service:** Celery + Redis for asynchronous comment processing.  
-  - **Database:** PostgreSQL (hosted on Supabase) for structured data storage.  
+  - **Database:**mysql main database
   - **Authentication:** OAuth 2.0 with JWT for secure access.
 
 ## 2. Architecture Pattern  
@@ -31,7 +31,7 @@
    - Backend calls the YouTube Data API to fetch comments.  
    - Implements retry mechanisms and error notifications if the API fails.
 3. **Processing:**  
-   - Comments are stored in PostgreSQL and queued for NLP processing via Celery.  
+   - Comments are stored in MySQL main database and queued for NLP processing via Celery.  
    - NLP service analyzes sentiment and extracts topics.
 4. **Output:**  
    - Processed insights are sent back to the frontend for visualization.
@@ -50,9 +50,9 @@
 - **Task Queue:** Celery with Redis for asynchronous processing.
 
 ### **Database & Storage**  
-- **Database:** PostgreSQL (via Supabase).  
+- **Database:** MySQL main database.  
 - **Cache:** Redis for session and query caching.  
-- **File Storage:** Supabase Storage or AWS S3 (if needed).
+- **File Storage:** supabase storage(if needed)
 
 ### **Machine Learning / NLP**  
 - **Libraries:** Hugging Face Transformers (e.g., BERT), TextBlob, or similar tools.  
@@ -87,11 +87,65 @@
   - API errors and exceptions logged via Django’s logging framework.
 
 ## 9. Database Design ERD  
-**Tables:**  
-- `users` (id, email, oauth_token, created_at)  
-- `videos` (id, user_id, youtube_id, created_at)  
-- `comments` (id, video_id, text, sentiment_score, topic, created_at)  
-- `analysis_results` (id, video_id, positive_pct, negative_pct, neutral_pct, recommendations)
+
+### Tables and Columns:
+
+**`users`**
+- `id` (Primary Key, INT, Auto Increment)
+- `email` (VARCHAR, UNIQUE, NOT NULL)
+- `oauth_token` (VARCHAR, NOT NULL)
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+**`videos`**
+- `id` (Primary Key, INT, Auto Increment)
+- `youtube_video_id` (VARCHAR, UNIQUE, NOT NULL)
+- `user_id` (INT, Foreign Key → `users.id`)
+- `title` (VARCHAR)
+- `description` (TEXT)
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+**`comments`**
+- `id` (Primary Key, INT, Auto Increment)
+- `youtube_comment_id` (VARCHAR, UNIQUE, NOT NULL)
+- `video_id` (INT, Foreign Key to `videos.id`)
+- `author_name` (VARCHAR)
+- `text` (TEXT)
+- `published_at` (DATETIME)
+- `like_count` (INT)
+- `created_at` (TIMESTAMP, DEFAULT CURRENT_TIMESTAMP)
+
+**`comment_analysis`**
+- `id` (Primary Key, INT, Auto Increment)
+- `comment_id` (INT, UNIQUE, NOT NULL)
+- `sentiment` (ENUM: positive, negative, neutral)
+- `topics` (JSON)
+- `keywords` (JSON)
+
+**`video_analysis`**
+- `id` (Primary Key, INT, Auto Increment)
+- `video_id` (INT, UNIQUE, NOT NULL)
+- `total_comments` (INT)
+- `positive_comments` (INT)
+- `negative_comments` (INT)
+- `neutral_comments` (INT)
+- `overall_sentiment` (ENUM: positive, negative, neutral)
+- `top_topics` (JSON)
+- `recommendations` (TEXT)
+
+### Relationships:
+
+- **`users`** → `videos` *(One-to-Many)*  
+  **users.id** → **videos.user_id**
+
+- **`videos`** → `comments` *(One-to-Many)*  
+  **videos.id** → **comments.video_id**
+
+- **`comments`** → `comment_analysis` *(One-to-One)*  
+  **comments.id** → **comment_analysis.comment_id**
+
+- **`videos`** → `video_analysis` *(One-to-One)*  
+  **videos.id** → **video_analysis.video_id**
+
 
 ### **Additional Considerations:**  
 - **Indexing:** Appropriate indexes on video_id, created_at, and sentiment_score for performance.  
@@ -103,7 +157,7 @@
 - **CI/CD Pipeline:**  
   - Docker-based development environment with GitHub Actions (or similar) for automated builds, tests, and deployments.
 - **Local Environment:**  
-  - Use Docker Compose to mirror production environment (Django, Redis, PostgreSQL) locally.
+  - Use Docker Compose to mirror production environment (Django, Redis, MySQL, MongoDB) locally.
 
 ## 11. Logging & Monitoring  
 - **Logging:**  

@@ -1,65 +1,142 @@
 # YouTube Comment Analysis SaaS - User Interface Design Document (UIDD)
 
-## 1. Layout Structure  
-- **Header:**  
-  - Input field for the YouTube video URL and an “Analyze” button.  
-  - Quick filters (date range, sentiment type, keyword search) and a status indicator for API connectivity.
-- **Left Sidebar:**  
-  - Navigation for video history, saved filters, and profile/logout options.  
-  - Option for toggling between light and dark mode.
-- **Main Dashboard:**  
-  - Multiple panels including sentiment analysis charts, time-series graphs, topic clustering visuals, a detailed comments table, and an AI recommendations panel.
-- **Footer:**  
-  - Minimal with links to support, documentation, and a “Report Issue” button for user feedback.
+## 1. Exact Layout Structure
 
-## 2. Core Components  
-- **Data Input Panel:** For URL submission and quick filter options.  
-- **Visualization Panels:**  
-  - Pie/Gauge charts for overall sentiment.  
-  - Line graphs for time-series sentiment analysis.  
-  - Word clouds and heatmaps for topic clustering.  
-  - A sortable, filterable comments table.
-- **Actionable Insights Panel:** Displays key takeaways and recommendations.
+```
+|=============================================================================|
+|  [Logo]                           YouTube Comment Analyzer                  |
+|=============================================================================|
+| URL: [ Paste YouTube Video URL here                          ] [Analyze] 🔍 |
+|-----------------------------------------------------------------------------|
+| Filters: [Date Range ▾]    [Sentiment ▾]    [Keywords 🔎                ]   |
+|=============================================================================|
+|                           Dashboard Overview                                |
+|-----------------------------------------------------------------------------|
+| [Sentiment Gauge]      | [Total Comments]      | [Top 3 Trending Topics]    |
+| Positive: 56% 🔵       | Comments: 345         | 1. Audio 🔊                |
+| Negative: 24% 🔴       |                       | 2. Editing 🎬              |
+| Neutral:  20% ⚪️       |                       | 3. Humor 😂                |
+|=============================================================================|
+|                        Detailed Analytics Panel                             |
+|-----------------------------------------------------------------------------|
+| Sentiment Over Time 📈                         Topic Clusters 🌐            |
+| [Line Chart Placeholder]                       [Bubble Chart Placeholder]   |
+|                                                                             |
+|-----------------------------------------------------------------------------|
+|                             Comments Table 📝                               |
+|-----------------------------------------------------------------------------|
+| [🔍 Search comments ]     Sort by: [ Date ▾ ] | Filter: [ All sentiments ▾ ]|
+|-----------------------------------------------------------------------------|
+| #  | Author      | Sentiment   | Comment Text              | Date Posted    |
+|----|-------------|-------------|---------------------------|----------------|
+| 1  | John Doe    | 🔵 Positive | Loved your editing skills!| 2025-03-05     |
+| 2  | Jane Smith  | 🔴 Negative | Audio quality could improve|2025-03-04     |
+| .. | ...         | ...         | ...                       | ...            |
+|=============================================================================|
+|                         AI Recommendations 🤖                               |
+|-----------------------------------------------------------------------------|
+| 🔸 Many users request improved audio quality – consider upgrading mic. 🎙️   |
+| 🔸 Positive response to humor segments – include more comedic elements. 😂  |
+| 🔸 Frequent mentions of editing style – maintain consistent editing quality.|
+|=============================================================================|
+| Footer: [ Support ] [ Docs ] [ Terms ]                       [Report Issue] |
+|=============================================================================|
 
-## 3. Interaction Patterns  
-- **Hover & Click States:**  
-  - Tooltips and expanded details on chart hover.  
-  - Click-to-expand panels for deep dives.
-- **Drill-Down Filters:**  
-  - Clicking a chart segment updates related tables and displays more granular data.
-- **Feedback Loop:**  
-  - A “Report Issue” button allows users to quickly provide feedback.
+## 2. Component Details
 
-## 4. Visual Design Elements & Color Scheme  
-- **Primary Colors:**  
-  - Blue (#007BFF) for primary actions.  
-  - White (#FFFFFF) and Gray (#F8F9FA) for a clean look.  
-  - Green/Red indicators for positive/negative sentiment.
-- **Dark Mode:**  
-  - Dark backgrounds (#1E1E1E) with light text (#FFFFFF).  
-  - Adapted chart colors for high contrast.
-- **Accessibility:**  
-  - Follow WCAG 2.1 guidelines with minimum contrast ratios (4.5:1 for text, 3:1 for large text).  
-  - ARIA roles on all interactive elements and clear keyboard navigation.
+### Header Section
+- **Top Bar**: Contains logo on left, application title centered
+- **URL Input**: Prominent central URL input field with placeholder text "Paste YouTube Video URL here" and an "Analyze" button with search icon
+- **Filter Bar**: Secondary row with filter options:
+  - Date Range dropdown
+  - Sentiment dropdown
+  - Keywords search field
 
-## 5. Mobile, Web App, Desktop Considerations  
-- **Responsive Design:**  
-  - Mobile-first approach with defined breakpoints (e.g., mobile < 768px, tablet 768–1024px, desktop > 1024px).  
-  - Collapsible sidebar and stackable panels for smaller screens.
-- **Performance:**  
-  - Asynchronous data loading to ensure smooth performance on all devices.
+### Dashboard Overview Panel
+- **Three-column Layout**:
+  1. **Sentiment Gauge**: Visual representation of sentiment distribution
+     - Positive percentage with blue indicator
+     - Negative percentage with red indicator
+     - Neutral percentage with white/gray indicator
+  2. **Total Comments**: Simple counter showing total analyzed comments
+  3. **Top Trending Topics**: Numbered list of top 3 topics with relevant emoji icons
 
-## 6. Typography  
-- **Primary Fonts:** Inter or Roboto (sans-serif).  
-- **Hierarchy:**  
-  - Headings: 18px–24px, Bold.  
-  - Body Text: 14px–16px, Regular.  
-  - Tooltips/Labels: 12px, Medium weight.
+### Detailed Analytics Panel
+- **Two-column Layout**:
+  1. **Sentiment Over Time**: Line chart showing sentiment trends over time with chart title and graph icon
+  2. **Topic Clusters**: Bubble chart or word cloud visualization with title and globe icon
 
-## 7. Accessibility  
-- **Standards:**  
-  - WCAG 2.1 compliant; ensure proper ARIA labeling, keyboard navigability, and screen reader support.  
-- **User Customization:**  
-  - Options to adjust text size and contrast.  
-- **Feedback Mechanism:**  
-  - Easy-to-access “Report Issue” button for user-driven improvements.
+### Comments Table
+- **Search and Filter Row**:
+  - Search comments field with magnifying glass icon
+  - Sort by dropdown (defaulted to Date)
+  - Filter dropdown for sentiment selection
+- **Table Structure**:
+  - Column headers: #, Author, Sentiment, Comment Text, Date Posted
+  - Sentiment indicators using colored dots (blue for positive, red for negative)
+  - Pagination (implied)
+
+### AI Recommendations Panel
+- **Bulleted List Format**:
+  - Each recommendation prefixed with orange diamond bullet point (🔸)
+  - Recommendations include emoji icons for visual emphasis
+  - Clear, actionable insights based on comment analysis
+
+### Footer
+- **Simple Bar Layout**:
+  - Left-aligned links: Support, Docs, Terms
+  - Right-aligned "Report Issue" button
+
+## 3. Visual Style
+
+### Colors
+- **Primary Action Color**: Blue (#0066FF) for buttons and highlights
+- **Sentiment Indicators**:
+  - Positive: Blue (🔵)
+  - Negative: Red (🔴)
+  - Neutral: White/Gray (⚪️)
+- **Borders and Dividers**: Light gray lines for section separation
+- **Background**: White for main content areas
+
+### Typography
+- **Headings**: Bold, centered for section titles
+- **Content**: Regular weight for data and text
+- **Table Text**: Compact, legible font for tabular data
+
+### Icons and Visual Elements
+- **Emoji Icons**: Used strategically to enhance understanding:
+  - 🔍 for search functions
+  - 📈 for charts and trends
+  - 🌐 for topic clusters
+  - 📝 for comments section
+  - 🤖 for AI recommendations
+  - Topic-specific emojis (🔊, 🎬, 😂, etc.)
+
+## 4. Interaction Guidelines
+
+### User Input
+- **URL Submission**: Single-field entry with clear call-to-action button
+- **Filtering**: Dropdown selectors for quick refinement of data
+- **Search**: Dedicated search field for comments with real-time filtering
+
+### Data Visualization
+- **Charts**: Interactive elements that respond to hover/click
+- **Table**: Sortable columns, filterable content
+- **Recommendations**: Clearly separated, scannable insights
+
+## 5. Responsive Considerations
+- **Layout Adjustments**:
+  - Two-column sections collapse to single column on smaller screens
+  - Table becomes scrollable horizontally on mobile
+  - Filter options collapse into dropdown menu on mobile
+
+## 6. Accessibility Features
+- **Color Contrast**: Ensure all text meets WCAG AA standards
+- **Screen Reader Support**: Proper labels for all interactive elements
+- **Keyboard Navigation**: Full support for tab navigation through interface
+
+## 7. Implementation Notes
+- **Border Structure**: Clear borders and dividers to separate functional areas
+- **Consistent Spacing**: Equal padding within sections
+- **Alignment**: Proper alignment of elements within their containers
+- **Table Layout**: Fixed-width columns with text wrapping for comment content
